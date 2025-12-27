@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Motivational Landscape of Change</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --card2:#0f1724;
+      --text:#e9eef6;
+      --muted:#a9b4c5;
+      --line:#223047;
+      --accent:#1a4f77;
+      --accent2:#2b77aa;
+      --danger:#c63b3b;
+      --shadow: 0 12px 28px rgba(0,0,0,.35);
+      --radius:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,#070a0f 0%, #0b0f14 100%); color:var(--text); font-family:var(--sans);}
+    .container{max-width:1100px; margin:0 auto; padding:18px;}
+    .topbar{position:sticky; top:0; z-index:10; background:rgba(11,15,20,.92); border-bottom:1px solid var(--line); backdrop-filter: blur(8px);}
+    .topbar .container{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+    .brand-title{font-weight:700; letter-spacing:.2px;}
+    .brand-subtitle{color:var(--muted); font-size:13px; margin-top:4px;}
+    .actions{display:flex; gap:10px; flex-wrap:wrap;}
+
+    .card{background:linear-gradient(180deg,var(--card) 0%, var(--card2) 100%); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px; margin:14px 0;}
+    .card h2{margin:0 0 12px 0; font-size:18px;}
+    .card h3{margin:0 0 10px 0; font-size:16px;}
+    .card h4{margin:0 0 10px 0; font-size:14px; color:#d6e2f3;}
+    .card-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px;}
+    .card-head-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+
+    label{display:block; font-size:12px; color:var(--muted); margin-bottom:6px;}
+    input,select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      outline:none;
+    }
+    input:focus,select:focus{border-color:rgba(43,119,170,.9); box-shadow:0 0 0 4px rgba(43,119,170,.18);}
+    input[type="number"]{font-family:var(--mono);}
+
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+    .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;}
+    .grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+    @media (max-width:980px){
+      .grid2,.grid3,.grid4{grid-template-columns:1fr;}
+      .topbar .container{flex-direction:column; align-items:flex-start;}
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn:hover{border-color:rgba(43,119,170,.7);}
+    .btn:active{transform:translateY(1px);}
+    .btn-primary{background:linear-gradient(180deg, rgba(26,79,119,.95), rgba(43,119,170,.65)); border-color:rgba(43,119,170,.9);}
+    .btn-ghost{background:transparent;}
+    .btn-ghost-danger{background:transparent; border-color:rgba(198,59,59,.45); color:#ffd7d7;}
+    .btn-ghost-danger:hover{border-color:rgba(198,59,59,.8);}
+
+    .note{color:var(--muted); font-size:13px; line-height:1.45;}
+    .fineprint{color:var(--muted); font-size:12px; margin-top:12px;}
+    .pill{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); color:var(--muted); font-size:12px;}
+
+    .split{display:grid; grid-template-columns: 340px 1fr; gap:14px; margin-top:10px;}
+    @media (max-width:980px){ .split{grid-template-columns:1fr;}}
+
+    .list{border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+    .list-item{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(34,48,71,.7);
+      cursor:pointer;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .list-item:last-child{border-bottom:none;}
+    .list-item:hover{background:rgba(255,255,255,.03);}
+    .list-item.active{background:rgba(43,119,170,.14);}
+    .list-title{font-weight:700; font-size:13px;}
+    .list-sub{color:var(--muted); font-size:12px; margin-top:4px;}
+
+    .empty{padding:14px; border:1px dashed rgba(34,48,71,.9); border-radius:12px; color:var(--muted);}
+    .hidden{display:none !important;}
+
+    .section{margin:14px 0; padding:12px; border:1px solid rgba(34,48,71,.7); border-radius:12px; background:rgba(255,255,255,.01);}
+    .metrics{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+    .metric{border:1px solid rgba(34,48,71,.7); border-radius:12px; padding:10px 12px; min-width:160px; background:rgba(255,255,255,.01);}
+    .metric-k{color:var(--muted); font-size:12px;}
+    .metric-v{font-family:var(--mono); font-size:16px; margin-top:6px;}
+
+    .kpi{border:1px solid rgba(34,48,71,.7); border-radius:14px; padding:12px; background:rgba(255,255,255,.01);}
+    .kpi-k{color:var(--muted); font-size:12px;}
+    .kpi-v{font-family:var(--mono); font-size:18px; margin-top:6px;}
+
+    .panel{border:1px solid rgba(34,48,71,.7); border-radius:14px; padding:12px; background:rgba(255,255,255,.01); margin-top:12px;}
+    .dist{display:flex; flex-direction:column; gap:8px; margin-top:8px;}
+    .bar{
+      display:grid;
+      grid-template-columns: 180px 1fr 70px;
+      gap:10px;
+      align-items:center;
+    }
+    .bar .name{color:#d6e2f3; font-size:13px;}
+    .bar .track{height:10px; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(34,48,71,.7); overflow:hidden;}
+    .bar .fill{height:100%; width:0%; background:linear-gradient(90deg, rgba(26,79,119,.9), rgba(43,119,170,.7));}
+    .bar .val{font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right;}
+
+    .findings{display:flex; flex-direction:column; gap:10px; margin-top:10px;}
+    .finding{
+      border:1px solid rgba(34,48,71,.7);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(255,255,255,.01);
+    }
+    .finding .t{font-weight:800; margin-bottom:6px;}
+    .finding .b{color:var(--muted); line-height:1.45; font-size:13px;}
+
+    .minihead{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid rgba(34,48,71,.7); border-radius:12px; background:rgba(255,255,255,.01); margin-bottom:10px;}
+    .mini-title{font-weight:800;}
+    .mini-sub{color:var(--muted); font-size:12px; margin-top:4px;}
+    .mini-actions{display:flex; gap:8px; flex-wrap:wrap;}
+
+    .info-row{display:flex; gap:10px; margin-top:10px; padding:10px 12px; border:1px solid rgba(34,48,71,.7); border-radius:12px; background:rgba(255,255,255,.01);}
+    .info-label{color:var(--muted); font-size:12px;}
+    .info-value{font-family:var(--mono); font-size:13px;}
+
+    .footer{border-top:1px solid var(--line); margin-top:18px;}
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="brand">
+        <div class="brand-title">Motivational Landscape of Change</div>
+        <div class="brand-subtitle">Diagnostyka zdolności systemu do ponoszenia wysiłku zmiany (OF/OS)</div>
+      </div>
+      <div class="actions">
+        <button id="btnSave" class="btn">Zapisz roboczo</button>
+        <button id="btnClear" class="btn btn-ghost">Wyczyść</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Wprowadzenie i instrukcja</h2>
+      <p>
+        Narzędzie diagnozuje motywację w zmianie organizacyjnej jako <strong>własność systemu (OF/OS)</strong>, a nie cechę ludzi.
+        Test wypełnia <strong>lider zespołu</strong>, odnosząc się do obserwowalnych faktów w pracy. Wyniki indywidualne są widoczne
+        tylko dla lidera i służą wyłącznie do agregacji zespołowej i organizacyjnej.
+      </p>
+      <p class="note">
+        Skala 0–3: <strong>0</strong> brak / nie występuje, <strong>1</strong> niski wpływ, <strong>2</strong> regularny wpływ, <strong>3</strong> dominuje / istotnie utrudnia pracę.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>0. Kontekst zmiany</h2>
+      <div class="grid2">
+        <div>
+          <label>Organizacja</label>
+          <input id="orgName" type="text" placeholder="Nazwa organizacji"/>
+        </div>
+        <div>
+          <label>Zespół</label>
+          <input id="teamName" type="text" placeholder="Nazwa zespołu"/>
+        </div>
+        <div>
+          <label>Obszar / proces</label>
+          <input id="processName" type="text" placeholder="np. obsługa zgłoszeń, produkcja, sprzedaż"/>
+        </div>
+        <div>
+          <label>Data pomiaru</label>
+          <input id="measurementDate" type="date"/>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label>Typ zmiany (1–12) – wybierz jeden dominujący</label>
+          <select id="changeType"></select>
+        </div>
+        <div>
+          <label>Etap zmiany (1–7) – wybierz jeden dominujący</label>
+          <select id="changeStage"></select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Praca na uczestnikach (roboczo)</h2>
+        <div class="card-head-right">
+          <span class="pill" id="participantCounter">Uczestnicy: 0</span>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div>
+          <label>Imię / ID (tylko dla lidera)</label>
+          <input id="pName" type="text" placeholder="np. A.K."/>
+        </div>
+        <div>
+          <label>Rola</label>
+          <input id="pRole" type="text" placeholder="np. specjalista, koordynator"/>
+        </div>
+        <div>
+          <label>Dodaj do listy</label>
+          <button id="btnAddParticipant" class="btn btn-primary">Dodaj uczestnika</button>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="left">
+          <h3>Lista uczestników</h3>
+          <div id="participantList" class="list"></div>
+        </div>
+
+        <div class="right">
+          <h3>Formularz dla wybranego uczestnika</h3>
+          <div id="noSelection" class="empty">
+            Wybierz uczestnika z listy po lewej, aby wypełnić sekcje 2–6.
+          </div>
+
+          <div id="participantForm" class="hidden">
+            <div class="minihead">
+              <div>
+                <div class="mini-title" id="selectedParticipantTitle">Uczestnik</div>
+                <div class="mini-sub" id="selectedParticipantMeta"></div>
+              </div>
+              <div class="mini-actions">
+                <button id="btnCopyPrev" class="btn btn-ghost" title="Skopiuj wartości poprzedniego uczestnika">Kopiuj poprzednie</button>
+                <button id="btnRemoveParticipant" class="btn btn-ghost-danger">Usuń</button>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>2. Stopień dotknięcia zmianą</h4>
+              <div class="grid3">
+                <div>
+                  <label>Zakres wpływu zmiany na pracę</label>
+                  <select id="affectScope">
+                    <option value="low">niski</option>
+                    <option value="mid">średni</option>
+                    <option value="high">wysoki</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Częstotliwość styku ze zmianą</label>
+                  <select id="affectFrequency">
+                    <option value="rare">sporadyczna</option>
+                    <option value="reg">regularna</option>
+                    <option value="daily">stała</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Zależność wyników pracy od powodzenia zmiany</label>
+                  <select id="affectDependency">
+                    <option value="low">niska</option>
+                    <option value="mid">średnia</option>
+                    <option value="high">wysoka</option>
+                  </select>
+                </div>
+              </div>
+              <div class="info-row">
+                <div class="info-label">Pozycja w zmianie (wyliczana):</div>
+                <div class="info-value" id="positionInChange">—</div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>3. Koszt zmiany (0–3)</h4>
+              <div class="grid3">
+                <div>
+                  <label>Koszt poznawczy</label>
+                  <input class="score" id="costCognitive" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Koszt organizacyjny</label>
+                  <input class="score" id="costOrg" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Koszt emocjonalny</label>
+                  <input class="score" id="costEmo" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+              </div>
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-k">Średnia Koszt</div>
+                  <div class="metric-v" id="avgCost">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>4. Dostępność GIVE (0–3)</h4>
+              <div class="grid3">
+                <div>
+                  <label>Doświadczalna poprawa w pracy</label>
+                  <input class="score" id="giveImprove" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Bilans wysiłek–korzyść</label>
+                  <input class="score" id="giveBalance" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Znaczenie GIVE dla roli</label>
+                  <input class="score" id="giveMeaning" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+              </div>
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-k">Średnia GIVE</div>
+                  <div class="metric-v" id="avgGive">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>5. Warunki uczenia i działania (PULL/OS) (0–3)</h4>
+              <div class="grid3">
+                <div>
+                  <label>Jasność oczekiwań</label>
+                  <input class="score" id="condClarity" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Bezpieczeństwo prób</label>
+                  <input class="score" id="condSafety" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Czas na uczenie</label>
+                  <input class="score" id="condTime" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+              </div>
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-k">Średnia Warunki</div>
+                  <div class="metric-v" id="avgCond">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>6. Sygnały graniczne (0–3)</h4>
+              <div class="grid3">
+                <div>
+                  <label>Regres do starych praktyk</label>
+                  <input class="score" id="sigRegress" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Odkładanie działań</label>
+                  <input class="score" id="sigDelay" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Ironia / cynizm</label>
+                  <input class="score" id="sigIrony" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Eskalacja napięć / konfliktów</label>
+                  <input class="score" id="sigConflicts" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Nadaktywność bez efektu</label>
+                  <input class="score" id="sigOveract" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+                <div>
+                  <label>Cisza / wycofanie</label>
+                  <input class="score" id="sigSilence" type="number" min="0" max="3" step="1" value="0"/>
+                </div>
+              </div>
+              <div class="metrics">
+                <div class="metric">
+                  <div class="metric-k">Średnia Sygnały</div>
+                  <div class="metric-v" id="avgSignals">—</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-k">Maks Sygnał</div>
+                  <div class="metric-v" id="maxSignal">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section">
+              <h4>Wynik indywidualny (tylko dla lidera)</h4>
+              <p class="note">
+                <strong>Reguły interpretacyjne służą identyfikacji i korekcie warunków zmiany (OF/OS), a nie ocenie postaw, intencji ani motywacji ludzi.</strong>
+              </p>
+              <div id="individualFindings" class="findings"></div>
+            </div>
+
+            <div class="section">
+              <button id="btnToTeamReport" class="btn btn-primary">Przejdź do raportu zespołowego</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="teamReportCard">
+      <div class="card-head">
+        <h2>Raport zespołowy (bez imion)</h2>
+        <div class="card-head-right">
+          <button id="btnExportJSON" class="btn">Eksport JSON</button>
+          <button id="btnExportCSV" class="btn btn-ghost">Eksport CSV</button>
+        </div>
+      </div>
+
+      <div class="grid4">
+        <div class="kpi">
+          <div class="kpi-k">% Koszt ≥ 2</div>
+          <div class="kpi-v" id="kpiCost">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-k">% GIVE ≥ 2</div>
+          <div class="kpi-v" id="kpiGive">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-k">% Warunki ≥ 2</div>
+          <div class="kpi-v" id="kpiCond">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-k">Śr. Sygnały / Maks</div>
+          <div class="kpi-v" id="kpiSignals">—</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="panel">
+          <h3>Rozkład pozycji w zmianie</h3>
+          <div id="positionDist" class="dist"></div>
+        </div>
+        <div class="panel">
+          <h3>Dominujące sygnały graniczne</h3>
+          <div id="signalDist" class="dist"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Wnioski i rekomendacje (automatycznie)</h3>
+        <div id="teamRecommendations" class="findings"></div>
+      </div>
+
+      <p class="fineprint">
+        Raport zespołowy nie zawiera imion. Eksport służy do agregacji organizacyjnej (porównania zespołów, trendów, map ryzyka).
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="fineprint">
+        Motivational Landscape of Change — wersja statyczna. Dane pozostają w przeglądarce, chyba że zostaną wyeksportowane.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    "use strict";
+
+    const THRESH = 2;
+
+    const changeTypes = [
+      { id: 1, name: "Korekta formalna" },
+      { id: 2, name: "Ujednolicenie standardu" },
+      { id: 3, name: "Zmiana narzędzia / formy" },
+      { id: 4, name: "Zmiana sekwencji pracy" },
+      { id: 5, name: "Zmiana zakresu odpowiedzialności" },
+      { id: 6, name: "Zmiana sposobu koordynacji" },
+      { id: 7, name: "Integracja międzyobszarowa" },
+      { id: 8, name: "Zmiana kryteriów oceny / KPI" },
+      { id: 9, name: "Adaptacja praktyki" },
+      { id: 10, name: "Zmiana logiki działania" },
+      { id: 11, name: "Zmiana sensu pracy (znaczenia)" },
+      { id: 12, name: "Transformacja systemowa" },
+    ];
+
+    const changeStages = [
+      { id: 1, name: "Rozpoznanie problemu" },
+      { id: 2, name: "Diagnoza przyczyn" },
+      { id: 3, name: "Projektowanie rozwiązania" },
+      { id: 4, name: "Decyzja i test" },
+      { id: 5, name: "Wdrożenie operacyjne" },
+      { id: 6, name: "Stabilizacja i uczenie" },
+      { id: 7, name: "Integracja i normalizacja" },
+    ];
+
+    const explain = {
+      overload: {
+        title: "Przeciążenie adaptacyjne",
+        body:
+          "Średnia w obszarze „Koszt zmiany” ≥ 2 oznacza, że zmiana generuje regularny i istotny wysiłek, który przekracza aktualną zdolność systemu do adaptacji. To sygnał niedopasowania zakresu, tempa lub sekwencji zmiany do realnych warunków pracy. Eskalacja presji pogłębia przeciążenie i zwiększa ryzyko regresów oraz spadku jakości. Zalecenie: zawęź zakres, spowolnij tempo i wzmocnij warunki uczenia/stabilizacji zamiast eskalacji wymagań."
+      },
+      noGive: {
+        title: "Brak sensu doświadczalnego (GIVE)",
+        body:
+          "Średnia w obszarze GIVE ≥ 2 oznacza, że uczestnicy nie doświadczają jeszcze realnej wartości zmiany w codziennej pracy. Ograniczenie wysiłku jest wtedy racjonalną reakcją systemu, a nie „oporem”. Ignorowanie sygnału zwiększa ryzyko pozornej adaptacji, ciszy i dystansu. Zalecenie: doprowadź do realnego GIVE (choćby częściowego) i wstrzymaj eskalację PUSH, dopóki sens nie stanie się odczuwalny."
+      },
+      noPull: {
+        title: "Brak warunków uczenia i działania (PULL/OS)",
+        body:
+          "Średnia w obszarze Warunki ≥ 2 oznacza, że system nie zapewnia jasności, czasu lub bezpieczeństwa prób potrzebnych do realnej adaptacji. Nawet wysoka motywacja osobista nie przełoży się na trwałą zmianę bez PULL/OS. Ignorowanie sygnału prowadzi do uczenia „po godzinach”, regresów i porzucania nowych praktyk. Zalecenie: zwiększ jasność oczekiwań, bezpieczeństwo prób i zabezpiecz czas na uczenie przed dalszą eskalacją wymagań."
+      },
+      regress: {
+        title: "Regres do starych praktyk",
+        body:
+          "Regres ≥ 2 oznacza, że stary sposób pracy nadal lepiej „niesie pracę” niż nowy (tańszy, bezpieczniejszy, bardziej przewidywalny). To zwykle skutek zbyt wysokiego kosztu lub braku GIVE. Ignorowanie prowadzi do podwójnych standardów (oficjalny vs faktyczny). Zalecenie: uprość OF i doprowadź do widocznego efektu (GIVE) zanim zaostrzysz wymagania."
+      },
+      delay: {
+        title: "Odkładanie działań / zwlekanie",
+        body:
+          "Odkładanie ≥ 2 jest sygnałem konfliktu zmiany z bieżącą pracą operacyjną. Zmiana przegrywa w konkurencji o czas i zasoby, bo nie została wbudowana w rytm pracy. Ignorowanie skutkuje chaotycznymi „zrywami” i spadkiem przewidywalności. Zalecenie: ochroń bieżącą pracę, wbuduj działania zmiany w rytm i ustal priorytety/sekwencję zamiast zwiększać presję."
+      },
+      ironySilence: {
+        title: "Utrata wiary i bezpieczeństwa społecznego (OS)",
+        body:
+          "Ironia ≥ 2 lub Cisza ≥ 2 oznacza, że uczestnik przestał traktować zmianę jako stabilną i przewidywalną ramę działania. To sygnał osłabienia OS: wycofania realnego zaangażowania i informacji zwrotnej. Ignorowanie prowadzi do pozornej zgody i utraty uczenia się. Zalecenie: przywróć przewidywalność (konsekwencja decyzji, mniej sprzecznych komunikatów), jasno rozdziel stałe elementy od korekt i zwiększ bezpieczeństwo zadawania pytań."
+      },
+      conflicts: {
+        title: "Przeciążenie systemu społecznego (OS)",
+        body:
+          "Konflikty ≥ 2 oznaczają, że relacje społeczne nie amortyzują już obciążeń zmiany. Konflikt jest objawem przeciążenia (presja, niejasne priorytety, zależności), a nie jego źródłem. Ignorowanie przenosi energię zespołu na obronę i polaryzację. Zalecenie: obniż presję (zakres/tempo), doprecyzuj priorytety i odpowiedzialności oraz stwórz warunki bezpiecznego rozładowania napięć."
+      },
+      overact: {
+        title: "Nadaktywność bez efektu (brak PLAN)",
+        body:
+          "Nadaktywność ≥ 2 oznacza wiele działań bez kumulacji w postęp — typowy objaw braku spójnego PLAN (sekwencji, celów pośrednich, domykania). Ignorowanie powoduje zmęczenie zmianą bez efektów i chaos inicjatyw. Zalecenie: uporządkuj sekwencję, ogranicz równoległe wątki, zdefiniuj punkty kontrolne i domykaj kroki zanim uruchomisz kolejne."
+      },
+      keyRole: {
+        title: "Spodziewane przeciążenie ról kluczowych",
+        body:
+          "Pozycja kluczowa + (Koszt ≥ 2 lub Sygnały ≥ 2) oznacza stan spodziewany: role kluczowe najwcześniej ponoszą ciężar adaptacyjny i testują zmianę w praktyce. To nie problem personalny, lecz efekt natury zmiany. Ignorowanie prowadzi do wyczerpania nośników zmiany i zatrzymania stabilizacji. Zalecenie: reguluj warunki (PULL), chroń role kluczowe, redukuj przeciążenia operacyjne i doprecyzuj odpowiedzialności."
+      },
+      peripheral: {
+        title: "Niespójność systemowa (obciążenie ról peryferyjnych)",
+        body:
+          "Pozycja peryferyjna + (Koszt ≥ 2 lub Sygnały ≥ 2) oznacza, że zmiana „rozlewa się” poza właściwy zakres i obciąża role, które nie powinny jeszcze ponosić istotnego kosztu. To sygnał błędu architektury zmiany (OF/PLAN), nie problem motywacyjny. Ignorowanie zwiększa chaos i lokalne obejścia. Zalecenie: zawęź zakres do rdzenia zmiany, uprość interfejsy stary/nowy i odłóż rozszerzenia do czasu stabilizacji."
+      },
+      t12cost: {
+        title: "Błąd projektowy (za wysoki koszt przy typie 1–2)",
+        body:
+          "Typ 1–2 + Koszt ≥ 2 oznacza, że prosta zmiana generuje nieproporcjonalnie wysoki koszt. To zwykle efekt niejednoznacznego standardu, wyjątków lub zbyt szerokiego zakresu. Eskalacja PUSH zwiększa koszt, ale nie wykonalność. Zalecenie: uprość standard, doprecyzuj kryteria i zawęź zakres."
+      },
+      t58plan: {
+        title: "Ryzyko koordynacyjne (typ 5–8) – potrzeba PLAN",
+        body:
+          "Typ 5–8 + (Odkładanie ≥ 2 lub Nadaktywność ≥ 2) oznacza, że zmiana utknęła na koordynacji: brakuje jasnej sekwencji i zależności. Jedni odkładają (ryzyko), inni nadrabiają aktywnością (chaos). Zalecenie: zaprojektuj PLAN: sekwencję kroków, odpowiedzialności, punkty kontrolne i domykanie, ograniczając równoległe wątki."
+      },
+      t912pull: {
+        title: "Norma adaptacyjna (typ 9–12) – silny PULL, wolniejsze tempo",
+        body:
+          "Typ 9–12 + Koszt ≥ 2 to stan normalny: zmiana wymaga uczenia się i zmiany praktyk, więc koszt rośnie. Traktowanie tego jako „problemu do usunięcia” prowadzi do pozornej adaptacji. Zalecenie: wzmocnij PULL (czas, bezpieczeństwo prób, jasność) i świadomie spowolnij tempo, aby umożliwić stabilizację."
+      }
+    };
+
+    const state = {
+      context: {
+        orgName: "",
+        teamName: "",
+        processName: "",
+        measurementDate: "",
+        changeTypeId: "",
+        changeStageId: "",
+      },
+      participants: [],
+      selectedId: null
+    };
+
+    const STORAGE_KEY = "mlc_state_v1";
+
+    const $ = (id) => document.getElementById(id);
+
+    const safeNowISO = () => {
+      const d = new Date();
+      const pad = (x) => String(x).padStart(2,'0');
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    };
+
+    const clamp03 = (v) => {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return 0;
+      if (n < 0) return 0;
+      if (n > 3) return 3;
+      return Math.round(n);
+    };
+
+    const avg = (arr) => arr.length ? (arr.reduce((a,b)=>a+b,0) / arr.length) : 0;
+    const pct = (num, den) => den ? Math.round((num/den)*100) : 0;
+
+    const escapeHtml = (s) => String(s)
+      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+
+    const dlText = (filename, text) => {
+      const blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    };
+
+    const positionLabel = (scope, freq, dep) => {
+      const map = { low:1, mid:2, high:3, rare:1, reg:2, daily:3 };
+      const score = (map[scope]||1) + (map[freq]||1) + (map[dep]||1);
+      if (score <= 4) return "peryferyjna";
+      if (score <= 7) return "częściowo dotknięta";
+      return "kluczowa";
+    };
+
+    const initSelects = () => {
+      const ct = $("changeType");
+      ct.innerHTML = `<option value="">— wybierz —</option>` + changeTypes
+        .map(x => `<option value="${x.id}">${x.id}. ${escapeHtml(x.name)}</option>`).join("");
+
+      const cs = $("changeStage");
+      cs.innerHTML = `<option value="">— wybierz —</option>` + changeStages
+        .map(x => `<option value="${x.id}">${x.id}. ${escapeHtml(x.name)}</option>`).join("");
+    };
+
+    const computeIndividual = (p) => {
+      const avgCost = avg([p.costCognitive, p.costOrg, p.costEmo]);
+      const avgGive = avg([p.giveImprove, p.giveBalance, p.giveMeaning]);
+      const avgCond = avg([p.condClarity, p.condSafety, p.condTime]);
+
+      const sigArr = [p.sigRegress,p.sigDelay,p.sigIrony,p.sigConflicts,p.sigOveract,p.sigSilence];
+      const avgSig = avg(sigArr);
+      const maxSig = Math.max(...sigArr);
+
+      const pos = positionLabel(p.affectScope, p.affectFrequency, p.affectDependency);
+
+      const flags = [];
+
+      if (avgCost >= THRESH) flags.push(explain.overload);
+      if (avgGive >= THRESH) flags.push(explain.noGive);
+      if (avgCond >= THRESH) flags.push(explain.noPull);
+
+      if (p.sigRegress >= THRESH) flags.push(explain.regress);
+      if (p.sigDelay >= THRESH) flags.push(explain.delay);
+      if (p.sigIrony >= THRESH || p.sigSilence >= THRESH) flags.push(explain.ironySilence);
+      if (p.sigConflicts >= THRESH) flags.push(explain.conflicts);
+      if (p.sigOveract >= THRESH) flags.push(explain.overact);
+
+      if (pos === "kluczowa" && (avgCost >= THRESH || maxSig >= THRESH)) flags.push(explain.keyRole);
+      if (pos === "peryferyjna" && (avgCost >= THRESH || maxSig >= THRESH)) flags.push(explain.peripheral);
+
+      const ct = Number(state.context.changeTypeId);
+      if ((ct === 1 || ct === 2) && avgCost >= THRESH) flags.push(explain.t12cost);
+      if (ct >= 5 && ct <= 8 && (p.sigDelay >= THRESH || p.sigOveract >= THRESH)) flags.push(explain.t58plan);
+      if (ct >= 9 && ct <= 12 && avgCost >= THRESH) flags.push(explain.t912pull);
+
+      const uniq = [];
+      const seen = new Set();
+      for (const f of flags) {
+        if (!seen.has(f.title)) { uniq.push(f); seen.add(f.title); }
+      }
+
+      return { avgCost, avgGive, avgCond, avgSig, maxSig, pos, flags: uniq };
+    };
+
+    const getSelected = () => state.participants.find(p => p.id === state.selectedId) || null;
+
+    const renderList = () => {
+      const list = $("participantList");
+      list.innerHTML = "";
+      state.participants.forEach(p => {
+        const it = document.createElement("div");
+        it.className = "list-item" + (p.id === state.selectedId ? " active" : "");
+        it.onclick = () => { state.selectedId = p.id; renderAll(); };
+        const r = computeIndividual(p);
+        it.innerHTML = `
+          <div>
+            <div class="list-title">${escapeHtml(p.name)}</div>
+            <div class="list-sub">${escapeHtml(p.role || "—")} · pozycja: ${escapeHtml(r.pos)}</div>
+          </div>
+          <div class="pill" title="Średnie (Koszt/GIVE/Warunki)">
+            ${r.avgCost.toFixed(1)}/${r.avgGive.toFixed(1)}/${r.avgCond.toFixed(1)}
+          </div>
+        `;
+        list.appendChild(it);
+      });
+      $("participantCounter").textContent = `Uczestnicy: ${state.participants.length}`;
+    };
+
+    const renderSelectedHeader = () => {
+      const p = getSelected();
+      if (!p) return;
+      $("selectedParticipantTitle").textContent = `Uczestnik: ${p.name}`;
+      $("selectedParticipantMeta").textContent = `${p.role || "—"} · ID lokalne`;
+    };
+
+    const bindForm = () => {
+      const p = getSelected();
+      if (!p) return;
+
+      $("affectScope").value = p.affectScope;
+      $("affectFrequency").value = p.affectFrequency;
+      $("affectDependency").value = p.affectDependency;
+
+      $("costCognitive").value = p.costCognitive;
+      $("costOrg").value = p.costOrg;
+      $("costEmo").value = p.costEmo;
+
+      $("giveImprove").value = p.giveImprove;
+      $("giveBalance").value = p.giveBalance;
+      $("giveMeaning").value = p.giveMeaning;
+
+      $("condClarity").value = p.condClarity;
+      $("condSafety").value = p.condSafety;
+      $("condTime").value = p.condTime;
+
+      $("sigRegress").value = p.sigRegress;
+      $("sigDelay").value = p.sigDelay;
+      $("sigIrony").value = p.sigIrony;
+      $("sigConflicts").value = p.sigConflicts;
+      $("sigOveract").value = p.sigOveract;
+      $("sigSilence").value = p.sigSilence;
+
+      updateComputedForSelected();
+    };
+
+    const updateComputedForSelected = () => {
+      const p = getSelected();
+      if (!p) return;
+      const r = computeIndividual(p);
+
+      $("positionInChange").textContent = r.pos;
+      $("avgCost").textContent = r.avgCost.toFixed(2);
+      $("avgGive").textContent = r.avgGive.toFixed(2);
+      $("avgCond").textContent = r.avgCond.toFixed(2);
+      $("avgSignals").textContent = r.avgSig.toFixed(2);
+      $("maxSignal").textContent = String(r.maxSig);
+
+      const box = $("individualFindings");
+      box.innerHTML = "";
+
+      if (!r.flags.length) {
+        box.innerHTML = `<div class="finding"><div class="t">Brak flag krytycznych</div><div class="b">Wynik nie wskazuje na progi alarmowe (≥ ${THRESH}) dla kosztu, GIVE, warunków ani sygnałów granicznych. Jeśli mimo to występuje problem, sprawdź kontekst (typ/etap) i stopień dotknięcia zmianą.</div></div>`;
+        return;
+      }
+
+      r.flags.forEach(f => {
+        const el = document.createElement("div");
+        el.className = "finding";
+        el.innerHTML = `<div class="t">${escapeHtml(f.title)}</div><div class="b">${escapeHtml(f.body)}</div>`;
+        box.appendChild(el);
+      });
+    };
+
+    const updateSelectedFromForm = () => {
+      const p = getSelected();
+      if (!p) return;
+
+      p.affectScope = $("affectScope").value;
+      p.affectFrequency = $("affectFrequency").value;
+      p.affectDependency = $("affectDependency").value;
+
+      p.costCognitive = clamp03($("costCognitive").value);
+      p.costOrg = clamp03($("costOrg").value);
+      p.costEmo = clamp03($("costEmo").value);
+
+      p.giveImprove = clamp03($("giveImprove").value);
+      p.giveBalance = clamp03($("giveBalance").value);
+      p.giveMeaning = clamp03($("giveMeaning").value);
+
+      p.condClarity = clamp03($("condClarity").value);
+      p.condSafety = clamp03($("condSafety").value);
+      p.condTime = clamp03($("condTime").value);
+
+      p.sigRegress = clamp03($("sigRegress").value);
+      p.sigDelay = clamp03($("sigDelay").value);
+      p.sigIrony = clamp03($("sigIrony").value);
+      p.sigConflicts = clamp03($("sigConflicts").value);
+      p.sigOveract = clamp03($("sigOveract").value);
+      p.sigSilence = clamp03($("sigSilence").value);
+
+      updateComputedForSelected();
+      renderTeamReport();
+      renderList();
+    };
+
+    const renderBars = (root, items, total) => {
+      root.innerHTML = "";
+      items.forEach(({name, count}) => {
+        const row = document.createElement("div");
+        row.className = "bar";
+        const percent = total ? Math.round((count/total)*100) : 0;
+        row.innerHTML = `
+          <div class="name">${escapeHtml(name)}</div>
+          <div class="track"><div class="fill" style="width:${percent}%"></div></div>
+          <div class="val">${count} (${percent}%)</div>
+        `;
+        root.appendChild(row);
+      });
+    };
+
+    const renderTeamReport = () => {
+      const N = state.participants.length;
+
+      if (N === 0) {
+        $("kpiCost").textContent = "—";
+        $("kpiGive").textContent = "—";
+        $("kpiCond").textContent = "—";
+        $("kpiSignals").textContent = "—";
+        $("positionDist").innerHTML = "";
+        $("signalDist").innerHTML = "";
+        $("teamRecommendations").innerHTML =
+          `<div class="finding"><div class="t">Brak danych</div><div class="b">Dodaj uczestników i wypełnij sekcje 2–6, aby wygenerować raport.</div></div>`;
+        return;
+      }
+
+      const per = state.participants.map(p => computeIndividual(p));
+
+      const cntCost = per.filter(r=>r.avgCost >= THRESH).length;
+      const cntGive = per.filter(r=>r.avgGive >= THRESH).length;
+      const cntCond = per.filter(r=>r.avgCond >= THRESH).length;
+
+      const avgSigTeam = avg(per.map(r=>r.avgSig));
+      const maxSigTeam = Math.max(...per.map(r=>r.maxSig));
+
+      $("kpiCost").textContent = `${pct(cntCost,N)}%`;
+      $("kpiGive").textContent = `${pct(cntGive,N)}%`;
+      $("kpiCond").textContent = `${pct(cntCond,N)}%`;
+      $("kpiSignals").textContent = `${avgSigTeam.toFixed(2)} / ${maxSigTeam}`;
+
+      const posCounts = per.reduce((acc,r)=>{acc[r.pos]=(acc[r.pos]||0)+1; return acc;}, {});
+      renderBars($("positionDist"), [
+        {name:"peryferyjna", count: posCounts["peryferyjna"] || 0},
+        {name:"częściowo dotknięta", count: posCounts["częściowo dotknięta"] || 0},
+        {name:"kluczowa", count: posCounts["kluczowa"] || 0},
+      ], N);
+
+      const sigCounts = {
+        regress: state.participants.filter(p=>p.sigRegress>=THRESH).length,
+        delay: state.participants.filter(p=>p.sigDelay>=THRESH).length,
+        ironyOrSilence: state.participants.filter(p=>p.sigIrony>=THRESH || p.sigSilence>=THRESH).length,
+        conflicts: state.participants.filter(p=>p.sigConflicts>=THRESH).length,
+        overact: state.participants.filter(p=>p.sigOveract>=THRESH).length,
+      };
+      renderBars($("signalDist"), [
+        {name:"Regres do starych praktyk", count: sigCounts.regress},
+        {name:"Odkładanie działań", count: sigCounts.delay},
+        {name:"Ironia lub Cisza", count: sigCounts.ironyOrSilence},
+        {name:"Konflikty", count: sigCounts.conflicts},
+        {name:"Nadaktywność bez efektu", count: sigCounts.overact},
+      ], N);
+
+      const rec = [];
+      const avgCostTeam = avg(per.map(r=>r.avgCost));
+      const avgGiveTeam = avg(per.map(r=>r.avgGive));
+      const avgCondTeam = avg(per.map(r=>r.avgCond));
+
+      if (avgCondTeam >= THRESH || pct(cntCond,N) >= 40) rec.push({ title: "Priorytet: wzmocnij PULL/OS", body: explain.noPull.body });
+      if (avgGiveTeam >= THRESH || pct(cntGive,N) >= 40) rec.push({ title: "Priorytet: doprowadź do GIVE", body: explain.noGive.body });
+      if (avgCostTeam >= THRESH || pct(cntCost,N) >= 40) rec.push({ title: "Priorytet: reguluj zakres i tempo", body: explain.overload.body });
+
+      if (pct(sigCounts.conflicts,N) >= 30) rec.push({ title: "Ryzyko: przeciążenie OS (konflikty)", body: explain.conflicts.body });
+      if (pct(sigCounts.ironyOrSilence,N) >= 30) rec.push({ title: "Ryzyko: utrata wiary/OS (ironia/cisza)", body: explain.ironySilence.body });
+      if (pct(sigCounts.delay,N) >= 30) rec.push({ title: "Ryzyko: konflikt z operacją (odkładanie)", body: explain.delay.body });
+      if (pct(sigCounts.overact,N) >= 30) rec.push({ title: "Ryzyko: brak PLAN (nadaktywność)", body: explain.overact.body });
+      if (pct(sigCounts.regress,N) >= 30) rec.push({ title: "Ryzyko: regres", body: explain.regress.body });
+
+      const ct = Number(state.context.changeTypeId);
+      if ((ct === 1 || ct === 2) && avgCostTeam >= THRESH) rec.push({ title: "Typ 1–2: błąd projektowy", body: explain.t12cost.body });
+      if (ct >= 5 && ct <= 8 && (pct(sigCounts.delay,N) >= 25 || pct(sigCounts.overact,N) >= 25)) rec.push({ title: "Typ 5–8: ryzyko koordynacyjne – PLAN", body: explain.t58plan.body });
+      if (ct >= 9 && ct <= 12 && avgCostTeam >= THRESH) rec.push({ title: "Typ 9–12: norma adaptacyjna – PULL i wolniej", body: explain.t912pull.body });
+
+      const uniq = [];
+      const seen = new Set();
+      for (const r of rec) { if (!seen.has(r.title)) { uniq.push(r); seen.add(r.title); } }
+
+      const out = $("teamRecommendations");
+      out.innerHTML = "";
+      if (!uniq.length) {
+        out.innerHTML = `<div class="finding"><div class="t">Brak flag dominujących na poziomie zespołu</div><div class="b">Nie widać systemowego przekroczenia progów. Jeśli problem trwa, sprawdź kontekst (typ/etap) i rozkład dotknięcia zmianą.</div></div>`;
+      } else {
+        uniq.forEach(r => {
+          const el = document.createElement("div");
+          el.className = "finding";
+          el.innerHTML = `<div class="t">${escapeHtml(r.title)}</div><div class="b">${escapeHtml(r.body)}</div>`;
+          out.appendChild(el);
+        });
+      }
+    };
+
+    const buildAggregate = () => {
+      const N = state.participants.length;
+      const per = state.participants.map(p => computeIndividual(p));
+      const cntCost = per.filter(r=>r.avgCost >= THRESH).length;
+      const cntGive = per.filter(r=>r.avgGive >= THRESH).length;
+      const cntCond = per.filter(r=>r.avgCond >= THRESH).length;
+
+      const avgCostTeam = avg(per.map(r=>r.avgCost));
+      const avgGiveTeam = avg(per.map(r=>r.avgGive));
+      const avgCondTeam = avg(per.map(r=>r.avgCond));
+      const avgSigTeam = avg(per.map(r=>r.avgSig));
+      const maxSigTeam = per.length ? Math.max(...per.map(r=>r.maxSig)) : 0;
+
+      const posCounts = per.reduce((acc,r)=>{acc[r.pos]=(acc[r.pos]||0)+1; return acc;}, {});
+      const sigCounts = {
+        regress: state.participants.filter(p=>p.sigRegress>=THRESH).length,
+        delay: state.participants.filter(p=>p.sigDelay>=THRESH).length,
+        ironyOrSilence: state.participants.filter(p=>p.sigIrony>=THRESH || p.sigSilence>=THRESH).length,
+        conflicts: state.participants.filter(p=>p.sigConflicts>=THRESH).length,
+        overact: state.participants.filter(p=>p.sigOveract>=THRESH).length,
+      };
+
+      return {
+        version: "mlc-static-v1",
+        threshold: THRESH,
+        context: {
+          orgName: state.context.orgName,
+          teamName: state.context.teamName,
+          processName: state.context.processName,
+          measurementDate: state.context.measurementDate || safeNowISO(),
+          changeTypeId: state.context.changeTypeId ? Number(state.context.changeTypeId) : null,
+          changeStageId: state.context.changeStageId ? Number(state.context.changeStageId) : null
+        },
+        sample: { N },
+        kpis: {
+          pctCostGE2: pct(cntCost,N),
+          pctGiveGE2: pct(cntGive,N),
+          pctCondGE2: pct(cntCond,N),
+          avgCostTeam: Number(avgCostTeam.toFixed(3)),
+          avgGiveTeam: Number(avgGiveTeam.toFixed(3)),
+          avgCondTeam: Number(avgCondTeam.toFixed(3)),
+          avgSignalsTeam: Number(avgSigTeam.toFixed(3)),
+          maxSignalTeam: maxSigTeam
+        },
+        distributions: {
+          positionCounts: posCounts,
+          signalCountsGE2: sigCounts
+        }
+      };
+    };
+
+    const exportJSON = () => {
+      const agg = buildAggregate();
+      const name = (state.context.teamName || "team").replaceAll(" ","_");
+      const date = (state.context.measurementDate || safeNowISO());
+      dlText(`MLC_${name}_${date}.json`, JSON.stringify(agg, null, 2));
+    };
+
+    const exportCSV = () => {
+      const agg = buildAggregate();
+      const c = agg.context;
+      const k = agg.kpis;
+      const d = agg.distributions;
+
+      const rows = [
+        ["version", agg.version],
+        ["threshold", agg.threshold],
+        ["orgName", c.orgName],
+        ["teamName", c.teamName],
+        ["processName", c.processName],
+        ["measurementDate", c.measurementDate],
+        ["changeTypeId", c.changeTypeId ?? ""],
+        ["changeStageId", c.changeStageId ?? ""],
+        ["N", agg.sample.N],
+        ["pctCostGE2", k.pctCostGE2],
+        ["pctGiveGE2", k.pctGiveGE2],
+        ["pctCondGE2", k.pctCondGE2],
+        ["avgCostTeam", k.avgCostTeam],
+        ["avgGiveTeam", k.avgGiveTeam],
+        ["avgCondTeam", k.avgCondTeam],
+        ["avgSignalsTeam", k.avgSignalsTeam],
+        ["maxSignalTeam", k.maxSignalTeam],
+        ["pos_peryferyjna", d.positionCounts["peryferyjna"] || 0],
+        ["pos_czesciowo", d.positionCounts["częściowo dotknięta"] || 0],
+        ["pos_kluczowa", d.positionCounts["kluczowa"] || 0],
+        ["sig_regress_GE2", d.signalCountsGE2.regress],
+        ["sig_delay_GE2", d.signalCountsGE2.delay],
+        ["sig_ironyOrSilence_GE2", d.signalCountsGE2.ironyOrSilence],
+        ["sig_conflicts_GE2", d.signalCountsGE2.conflicts],
+        ["sig_overact_GE2", d.signalCountsGE2.overact],
+      ];
+
+      const csv = rows.map(r => r.map(x => `"${String(x).replaceAll('"','""')}"`).join(",")).join("\n");
+      const name = (state.context.teamName || "team").replaceAll(" ","_");
+      const date = (state.context.measurementDate || safeNowISO());
+      dlText(`MLC_${name}_${date}.csv`, csv);
+    };
+
+    const saveLocal = () => {
+      state.context.orgName = $("orgName").value.trim();
+      state.context.teamName = $("teamName").value.trim();
+      state.context.processName = $("processName").value.trim();
+      state.context.measurementDate = $("measurementDate").value || "";
+      state.context.changeTypeId = $("changeType").value || "";
+      state.context.changeStageId = $("changeStage").value || "";
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      alert("Zapisano roboczo w przeglądarce (LocalStorage).");
+    };
+
+    const loadLocal = () => {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      try {
+        const obj = JSON.parse(raw);
+        if (!obj || typeof obj !== "object") return;
+        Object.assign(state, obj);
+
+        $("orgName").value = state.context.orgName || "";
+        $("teamName").value = state.context.teamName || "";
+        $("processName").value = state.context.processName || "";
+        $("measurementDate").value = state.context.measurementDate || safeNowISO();
+        $("changeType").value = state.context.changeTypeId || "";
+        $("changeStage").value = state.context.changeStageId || "";
+      } catch {}
+    };
+
+    const clearAll = () => {
+      const ok = confirm("Wyczyścić wszystkie dane lokalne testu?");
+      if (!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      state.context = { orgName:"", teamName:"", processName:"", measurementDate:"", changeTypeId:"", changeStageId:"" };
+      state.participants = [];
+      state.selectedId = null;
+
+      $("orgName").value = "";
+      $("teamName").value = "";
+      $("processName").value = "";
+      $("measurementDate").value = safeNowISO();
+      $("changeType").value = "";
+      $("changeStage").value = "";
+      $("pName").value = "";
+      $("pRole").value = "";
+
+      renderAll();
+    };
+
+    const addParticipant = () => {
+      const name = $("pName").value.trim();
+      const role = $("pRole").value.trim();
+      if (!name) { alert("Podaj Imię/ID uczestnika (roboczo)."); return; }
+
+      const id = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : ("p_" + Date.now() + "_" + Math.random().toString(16).slice(2));
+
+      state.participants.push({
+        id, name, role,
+        affectScope: "low",
+        affectFrequency: "rare",
+        affectDependency: "low",
+        costCognitive: 0, costOrg: 0, costEmo: 0,
+        giveImprove: 0, giveBalance: 0, giveMeaning: 0,
+        condClarity: 0, condSafety: 0, condTime: 0,
+        sigRegress: 0, sigDelay: 0, sigIrony: 0, sigConflicts: 0, sigOveract: 0, sigSilence: 0,
+      });
+
+      $("pName").value = "";
+      $("pRole").value = "";
+      state.selectedId = id;
+      renderAll();
+    };
+
+    const removeSelected = () => {
+      if (!state.selectedId) return;
+      const idx = state.participants.findIndex(p => p.id === state.selectedId);
+      if (idx < 0) return;
+      if (!confirm("Usunąć uczestnika? (Nieodwracalne)")) return;
+      state.participants.splice(idx, 1);
+      state.selectedId = state.participants.length ? state.participants[Math.max(0, idx-1)].id : null;
+      renderAll();
+    };
+
+    const copyPrev = () => {
+      if (!state.selectedId) return;
+      const idx = state.participants.findIndex(p => p.id === state.selectedId);
+      if (idx <= 0) { alert("Brak poprzedniego uczestnika."); return; }
+      const prev = state.participants[idx-1];
+      const cur = state.participants[idx];
+      const fields = [
+        "affectScope","affectFrequency","affectDependency",
+        "costCognitive","costOrg","costEmo",
+        "giveImprove","giveBalance","giveMeaning",
+        "condClarity","condSafety","condTime",
+        "sigRegress","sigDelay","sigIrony","sigConflicts","sigOveract","sigSilence"
+      ];
+      fields.forEach(f => cur[f] = prev[f]);
+      renderAll();
+    };
+
+    const renderAll = () => {
+      renderList();
+      renderTeamReport();
+
+      const p = getSelected();
+      if (!p) {
+        $("noSelection").classList.remove("hidden");
+        $("participantForm").classList.add("hidden");
+        return;
+      }
+      $("noSelection").classList.add("hidden");
+      $("participantForm").classList.remove("hidden");
+      renderSelectedHeader();
+      bindForm();
+    };
+
+    const bindEvents = () => {
+      $("btnAddParticipant").addEventListener("click", addParticipant);
+      $("btnRemoveParticipant").addEventListener("click", removeSelected);
+      $("btnCopyPrev").addEventListener("click", copyPrev);
+      $("btnSave").addEventListener("click", saveLocal);
+      $("btnClear").addEventListener("click", clearAll);
+      $("btnExportJSON").addEventListener("click", exportJSON);
+      $("btnExportCSV").addEventListener("click", exportCSV);
+      $("btnToTeamReport").addEventListener("click", () => $("teamReportCard").scrollIntoView({behavior:"smooth", block:"start"}));
+
+      ["orgName","teamName","processName","measurementDate","changeType","changeStage"].forEach(id => {
+        $(id).addEventListener("input", () => {
+          state.context.orgName = $("orgName").value.trim();
+          state.context.teamName = $("teamName").value.trim();
+          state.context.processName = $("processName").value.trim();
+          state.context.measurementDate = $("measurementDate").value || "";
+          state.context.changeTypeId = $("changeType").value || "";
+          state.context.changeStageId = $("changeStage").value || "";
+          renderTeamReport();
+        });
+        $(id).addEventListener("change", () => {
+          state.context.changeTypeId = $("changeType").value || "";
+          state.context.changeStageId = $("changeStage").value || "";
+          renderTeamReport();
+        });
+      });
+
+      const ids = [
+        "affectScope","affectFrequency","affectDependency",
+        "costCognitive","costOrg","costEmo",
+        "giveImprove","giveBalance","giveMeaning",
+        "condClarity","condSafety","condTime",
+        "sigRegress","sigDelay","sigIrony","sigConflicts","sigOveract","sigSilence"
+      ];
+      ids.forEach(id => {
+        $(id).addEventListener("input", updateSelectedFromForm);
+        $(id).addEventListener("change", updateSelectedFromForm);
+      });
+    };
+
+    // BOOT
+    initSelects();
+    $("measurementDate").value = safeNowISO();
+    bindEvents();
+    loadLocal();
+    renderAll();
+  })();
+  </script>
+</body>
+</html>
